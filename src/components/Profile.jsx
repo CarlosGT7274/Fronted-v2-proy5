@@ -11,7 +11,7 @@ const Profile = () => {
 
   useEffect(() => {
     const checkToken = async () => {
-      const url = 'http://localhost:4000/api/v1/users/me';
+      const url = 'https://backend-v2-proy5.vercel.app/api/v1/users/me';
       const token = localStorage.getItem('token');
       if (token) {
         try {
