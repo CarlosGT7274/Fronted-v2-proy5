@@ -11,8 +11,10 @@ import ThemeProvider from './context/ThemeContext';
 import UserProvider from './context/UserContext';
 import LoginProvider from './context/LoginContext';
 import Listadeproductos from './components/Listadeproductos';
-import Checkout from './components/checkout';
+import Checkout from './components/checkout/';
 import ProductoIndividual from './components/productoindividual.jsx';
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+
 
 const router = createBrowserRouter([
   {
@@ -38,11 +40,32 @@ const router = createBrowserRouter([
   ,
   {
     path: '/checkout',
-    element: <Checkout />,
+    element:( 
+    <Checkout>
+        <PayPalScriptProvider
+                options={{
+                    "client-id": "test",
+                    components: "buttons",
+                    currency: "USD"
+                }}
+            >
+          </PayPalScriptProvider>
+    </Checkout>
+    ),
   },
   {
-    path: '/prodindividual',
-    element: <ProductoIndividual />,
+    path: '/prodindividual/:id',
+    element:( 
+      <PayPalScriptProvider
+                options={{
+                    "client-id": "ATZroH_4k1HAmAPAZc0fHJ1OoIfy03AeNdK6tg-PcmgDSi9OK__b0n4931udgxH03Yur3fQuzMbxpU5L",
+                    components: "buttons",
+                    currency: "USD"
+                }}
+            >
+          <ProductoIndividual />
+      </PayPalScriptProvider>
+  ),
   }
 
 

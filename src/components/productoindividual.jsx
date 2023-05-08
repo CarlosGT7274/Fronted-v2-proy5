@@ -1,31 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import ButtonWrapper from './checkout/BtonCheckout.jsx';
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 
-const ProductoIndividual = () => {
-  const { id } = useParams();
+function ProductoIndividual(props) {
   const [producto, setProducto] = useState(null);
+  const { id } = useParams();
 
   useEffect(() => {
-    axios.get(`http://localhost:4000/api/v1/products/${id}`)
-      .then(response => {
-        setProducto(response.data.producto);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, [id]);  
+    async function fetchProducto() {
+      try {
+        const response = await fetch(`http://localhost:4000/api/v1/products/${id}`);
+        const data = await response.json();
+        setProducto(data);
+        console.log(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchProducto();
+  }, [id]);
 
   if (!producto) {
-    return <div>Loading...</div>;
+    return <div>Cargando producto...</div>;
   }
+const currency = "MXN";
 
   return (
     <div>
-      <h1>{producto.name}</h1>
-      <p>{producto.description}</p>
-      <p>{producto.price}</p>
-      {/* Aquí puedes agregar un botón para ir al checkout */}
+      <h3>{producto.product.name}</h3>
+      <p>{producto.product.description}</p>
+      <p>Precio: ${producto.product.price} mxn</p>
+      <p>{producto.product.image}</p>
+      <img src={producto.product.image} alt={producto.product.name} />
+      <ButtonWrapper currency={currency} showSpinner={false} amount={producto.product.price} />
     </div>
   );
 }

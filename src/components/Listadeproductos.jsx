@@ -34,7 +34,7 @@ return (
         <Card.Title>{producto.name}</Card.Title>
         <Card.Text>{producto.description}</Card.Text>
         <Card.Text>{producto.price}</Card.Text>
-        <Button variant="primary" as={Link} to="/prodindividual">Comprar</Button>
+        <Button variant="primary" as={Link} to={`/prodindividual/${producto._id}`}>Comprar</Button>
       </Card.Body>
     </Card>  
     ))}
