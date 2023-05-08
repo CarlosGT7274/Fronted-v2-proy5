@@ -10,7 +10,7 @@ function ProductoIndividual(props) {
   useEffect(() => {
     async function fetchProducto() {
       try {
-        const response = await fetch(`http://localhost:4000/api/v1/products/${id}`);
+        const response = await fetch(`https://backend-v2-proy5.vercel.app/api/v1/products/${id}`);
         const data = await response.json();
         setProducto(data);
         console.log(data);
