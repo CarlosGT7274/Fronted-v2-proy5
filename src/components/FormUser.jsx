@@ -9,7 +9,7 @@ const FormUser = () => {
      const [userData,setData] = useState()
 
      const saveUser = async() =>{
-      const url = 'http://localhost:4000/api/v1/register'
+      const url = 'https://backend-v2-proy5.vercel.app/api/v1/register'
       const result = await axios.post(url, userData)
       console.log(result)
      }
