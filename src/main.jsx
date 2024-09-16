@@ -5,6 +5,9 @@ import App from "./App.jsx";
 import Login from "./pages/login.jsx";
 import "./index.css";
 import Productos from "./pages/productos.jsx"
+import { AuthProvider } from './context/AuthContext';
+import { ProductProvider } from './context/ProductContext.jsx'
+import CheckoutPage from './pages/checkout.jsx'
 
 function RootComponent() {
   const [token, setToken] = useState();
@@ -21,6 +24,10 @@ function RootComponent() {
     {
       path: "/productos",
       element: <Productos />
+    },
+    {
+      path: "/checkout",
+      element: <CheckoutPage />
     }
   ]);
 
@@ -29,7 +36,11 @@ function RootComponent() {
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RootComponent />
+    <AuthProvider>
+      <ProductProvider>
+        <RootComponent />
+      </ProductProvider>
+    </AuthProvider>
   </StrictMode>
 );
 

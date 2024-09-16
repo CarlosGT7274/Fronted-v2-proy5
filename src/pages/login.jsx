@@ -3,32 +3,26 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import api from "../api/axios"
 import Header from "../components/header";
-
-async function loginUser(credentials) {
-  return api
-    .post("/auth/login", {
-      username: credentials.username,
-      password: credentials.password,
-    })
-    .then((response) => response.data)  
-    .catch((error) => {
-      console.error("There was an error logging in!", error);
-      return null;
-    });
-}
+import useAuth from '../hooks/useAuth';
+import { useNavigate } from "react-router-dom";
 
 
-export default function Login({ setToken }) {
-  const [username, setUserName] = useState();
-  const [password, setPassword] = useState();
+
+const Login = () => {
+  const [username, setUserName] = useState('');
+  const [password, setPassword] = useState('');
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const token = await loginUser({
-      username,
-      password,
-    });
-    setToken(token);
+    e.preventDefault()
+    const success = await login(username, password);
+    if (success) {
+      navigate('/');
+    } else {
+      // Manejar error de login
+      alert('Login failed. Please try again.');
+    }
   };
 
   return (
@@ -82,6 +76,4 @@ export default function Login({ setToken }) {
   );
 }
 
-Login.propTypes = {
-  setToken: PropTypes.func.isRequired,
-};
+export default Login
